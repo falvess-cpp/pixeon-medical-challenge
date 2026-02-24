@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <!-- O caminho aqui é relativo ao arquivo .qrc -->
+        <file>perfis.json</file>
+		<file>pacientes.json</file>
+    </qresource>
+</RCC>

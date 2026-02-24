@@ -1,0 +1,91 @@
+{
+  "pacientes": [
+    { 
+      "id": "CM001", 
+      "nome": "JOÃO SILVA",
+      "status": "AGUARDANDO",      
+      "idade": 45, 
+      "queixa": "Dor torácica", 
+      "historico": "Hipertenso, ex-fumante, relata cansaço ao esforço.",
+      "exame_sugerido": "Raio-X Tórax",
+      "exames": [
+        {
+          "id_exame": "EX_001",
+          "tipo": "Raio-X",
+          "data": "2024-05-20",
+          "path": "data/exames/CM001/raiox_torax.png"
+        }
+      ]
+    },
+    { 
+      "id": "CM002", 
+      "nome": "MARIA SOUZA", 
+      "status": "AGUARDANDO",
+      "idade": 30, 
+      "queixa": "Fratura rádio", 
+      "historico": "Queda da própria altura, dor intensa no punho direito.",
+      "exame_sugerido": "Ressonância Braço",
+      "exames": []
+    },
+    { 
+      "id": "CM003", 
+      "nome": "SILVANA ADAN", 
+      "status": "AGUARDANDO",
+      "idade": 45, 
+      "queixa": "Dor torácica", 
+      "historico": "Relata queimação retroesternal após refeições.",
+      "exame_sugerido": "Raio-X Tórax",
+      "exames": []
+    },
+    { 
+      "id": "CM004", 
+      "nome": "IGOR DAMACENO", 
+      "status": "AGUARDANDO",
+      "idade": 30, 
+      "queixa": "Fratura rádio", 
+      "historico": "Trauma esportivo (Futebol), edema visível no antebraço.",
+      "exame_sugerido": "Ressonância Braço",
+      "exames": []
+    },
+    { 
+      "id": "CM005", 
+      "nome": "BEATRIZ ALVES", 
+      "status": "AGUARDANDO",
+      "idade": 45, 
+      "queixa": "Dor torácica", 
+      "historico": "Histórico familiar de cardiopatia, check-up de rotina.",
+      "exame_sugerido": "Raio-X Tórax",
+      "exames": []
+    },
+    { 
+      "id": "CM006", 
+      "nome": "TATIANA SILVA", 
+      "status": "AGUARDANDO",
+      "idade": 30, 
+      "queixa": "Fratura rádio", 
+      "historico": "Sem histórico de alergias, dor persistente após queda.",
+      "exame_sugerido": "Ressonância Braço",
+      "exames": []
+    },
+    { 
+      "id": "CM007", 
+      "nome": "TALITA OLIVEIRA", 
+      "status": "AGUARDANDO",
+      "idade": 45, 
+      "queixa": "Dor torácica", 
+      "historico": "Sintomas gripais associados a desconforto respiratório.",
+      "exame_sugerido": "Raio-X Tórax",
+      "exames": []
+    },
+    { 
+      "id": "CM008", 
+      "nome": "KATIA MINGAU", 
+      "status": "AGUARDANDO",
+      "idade": 30, 
+      "queixa": "Fratura rádio", 
+      "historico": "Uso de gesso prévio, necessita avaliação de consolidação.",
+      "exame_sugerido": "Ressonância Braço",
+      "exames": []
+    }
+  ]
+}
