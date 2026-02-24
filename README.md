@@ -1,3 +1,7 @@
+## Nota: Acesso ao Sistema
+Para testar as funcionalidades de login, utilize o token padrão:
+- **TOKEN:** 123456
+
 # Pixeon Medical System - Desafio Técnico
 
 Este projeto é uma estação de trabalho médica (Medical Workstation) de alta performance, desenvolvida em **C++17** e **Qt 6**, focada no fluxo clínico de diagnóstico por imagem (PACS/RIS).
