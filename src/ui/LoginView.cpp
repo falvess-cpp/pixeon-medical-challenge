@@ -28,6 +28,7 @@ LoginView::LoginView(QWidget *parent) : QWidget(parent), m_isDoctorSelected(true
  * - Frame C (Rodapé): Botão de acesso em destaque (Verde).
  */
 void LoginView::setupUI() {
+	LOG_FUNC_ENTRY();
     auto* mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
@@ -111,18 +112,23 @@ void LoginView::setupUI() {
     });
 
     connect(m_tokenField, &QLineEdit::textChanged, [this](){ m_errorLabel->clear(); });
+	LOG_FUNC_EXIT();
 }
 
 
 void LoginView::atualizarListaUsuarios(const QStringList& usuarios, bool isDoctor) {
+	LOG_FUNC_ENTRY();
     m_isDoctorSelected = isDoctor;
     m_userCombo->clear();
     m_userCombo->addItems(usuarios);
     m_tokenField->clear();
+	LOG_FUNC_EXIT();
 }
 
 void LoginView::exibirMensagemErro(const QString& msg) {
+	LOG_FUNC_ENTRY();
     m_errorLabel->setText(msg);
     m_tokenField->setFocus();
     LOG_WARN("UI: Erro exibido - " + msg.toStdString());
+	LOG_FUNC_EXIT();
 }

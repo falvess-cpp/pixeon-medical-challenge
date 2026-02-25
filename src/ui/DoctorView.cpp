@@ -23,14 +23,17 @@
 #include <algorithm>
 
 DoctorView::DoctorView(QWidget *parent) : QWidget(parent) {
+	LOG_FUNC_ENTRY();
     setupUI();
     connect(&GlobalState::instance(), &GlobalState::imageProcessed, this, [this](const QImage& img){
         m_currentProcessedImage = img; 
         updateDisplay();               
-    });	
+    });
+	LOG_FUNC_EXIT();	
 }
 
 void DoctorView::setupUI() {
+	LOG_FUNC_ENTRY();
     auto* mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
@@ -75,6 +78,7 @@ void DoctorView::setupUI() {
 
     connect(m_brightnessSlider, &QSlider::valueChanged, this, &DoctorView::requestImageUpdate);
     connect(m_contrastSlider, &QSlider::valueChanged, this, &DoctorView::requestImageUpdate);
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -83,6 +87,7 @@ void DoctorView::setupUI() {
  * para garantir nitidez (SmoothTransformation) e acionar as barras de scroll (Pan).
  */
 void DoctorView::updateDisplay() {
+	LOG_FUNC_ENTRY();
     if (!m_imageLabel || m_currentProcessedImage.isNull()) return;
 
     QSize baseSize = m_currentProcessedImage.size();
@@ -90,6 +95,7 @@ void DoctorView::updateDisplay() {
     QPixmap pix = QPixmap::fromImage(m_currentProcessedImage);
     m_imageLabel->setPixmap(pix.scaled(zoomedSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     m_imageLabel->setFixedSize(zoomedSize);
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -98,6 +104,7 @@ void DoctorView::updateDisplay() {
  * com requisições redundantes durante o arraste rápido do mouse.
  */
 void DoctorView::mouseMoveEvent(QMouseEvent *event) {
+	LOG_FUNC_ENTRY();
     if (m_isDragging && !m_originalImage.isNull()) {
         QPoint currentPos = event->pos();
         QPoint delta = currentPos - m_lastMousePos;
@@ -116,6 +123,7 @@ void DoctorView::mouseMoveEvent(QMouseEvent *event) {
         m_brightnessSlider->setValue(std::clamp(newBrightness, -100, 100));
         m_contrastSlider->setValue(std::clamp(newContrast, -100, 100));
     }
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -124,6 +132,7 @@ void DoctorView::mouseMoveEvent(QMouseEvent *event) {
  * evitando que imagens de alta resolução estourem os limites da janela.
  */
 void DoctorView::loadImage(const QString& path) {
+	LOG_FUNC_ENTRY();
     if (path.isEmpty()) return;
     QImage img(path);
     if (img.isNull()) {
@@ -155,6 +164,7 @@ void DoctorView::loadImage(const QString& path) {
 
     updateDisplay();
     LOG_INFO("DoctorView: Imagem ajustada para 80% da area visivel. Zoom: " + std::to_string(m_zoomFactor));
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -163,14 +173,17 @@ void DoctorView::loadImage(const QString& path) {
  * e centralizado no container QScrollArea.
  */
 void DoctorView::wheelEvent(QWheelEvent *event) {
+	LOG_FUNC_ENTRY();
     if (m_originalImage.isNull()) return;
 	
     double factor = (event->angleDelta().y() > 0) ? 1.05 : 0.95;
     m_zoomFactor = std::clamp(m_zoomFactor * factor, 0.1, 5.0);
     updateDisplay();
+	LOG_FUNC_EXIT();
 }
 
 void DoctorView::requestImageUpdate() {
+	LOG_FUNC_ENTRY();
     if (m_originalImage.isNull()) return;
 
     WorkerRequest req;
@@ -186,27 +199,33 @@ void DoctorView::requestImageUpdate() {
              " C: " + std::to_string(m_contrastSlider->value()));
 
     GlobalState::instance().pushRequest(req);
+	LOG_FUNC_EXIT();
 }
 
 void DoctorView::mousePressEvent(QMouseEvent *event) {
+	LOG_FUNC_ENTRY();
     if (!m_originalImage.isNull()) {
         m_lastMousePos = event->pos();
         m_isDragging = true;
         setCursor(Qt::SizeAllCursor);
     }
+	LOG_FUNC_EXIT();
 }
 
 void DoctorView::mouseReleaseEvent(QMouseEvent *event) {
+	LOG_FUNC_ENTRY();
     m_isDragging = false;
     unsetCursor();
+	LOG_FUNC_EXIT();
 }
 
 void DoctorView::resizeEvent(QResizeEvent *event) {
-
+	LOG_FUNC_ENTRY();
     QWidget::resizeEvent(event);
     
     if (!m_originalImage.isNull()) {
         updateDisplay();
     }
+	LOG_FUNC_EXIT();
 }
 

@@ -26,6 +26,7 @@
  * do método setPixel/pixel (Requisito 4 de Eficiência).
  */
 void processImage(WorkerRequest& req) {
+	LOG_FUNC_ENTRY();
     int brightness = req.payload["brightness"].toInt();
     double contrast = req.payload["contrast"].toDouble();
     QImage img = req.image; 
@@ -49,6 +50,7 @@ void processImage(WorkerRequest& req) {
 
     emit GlobalState::instance().imageProcessed(img);
     LOG_INFO("Worker: Imagem processada.");
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -58,7 +60,7 @@ void processImage(WorkerRequest& req) {
  * data/exames e a atualização do banco de dados em memória (GlobalState).
  */
 void processarImportacao(const QString& id, const QString& originPath) {
-
+	LOG_FUNC_ENTRY();
     QString destDir = GlobalState::getExamsPath(id) + "/";
     QDir().mkpath(destDir);
     QString fileName = QFileInfo(originPath).fileName();
@@ -101,6 +103,7 @@ void processarImportacao(const QString& id, const QString& originPath) {
 
     LOG_INFO("Worker: Importacao concluida: " + destPath.toStdString());
     emit GlobalState::instance().imageImported(destPath);
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -155,4 +158,5 @@ void backgroundWorker() {
             }
         }
     }
+	LOG_FUNC_EXIT();
 }

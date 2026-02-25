@@ -15,16 +15,18 @@
 LoginController::LoginController(LoginView* view, QObject* parent)
     : QObject(parent), m_view(view) 
 {
+	LOG_FUNC_ENTRY();
     m_model = std::make_unique<PerfilModel>();
 
     connect(m_view, &LoginView::perfilSolicitado, this, &LoginController::aoMudarPerfil);
     connect(m_view, &LoginView::tentativaLogin, this, &LoginController::aoTentarLogin);
     
     LOG_INFO("LoginController: Instanciado e conectado.");
+	LOG_FUNC_EXIT();
 }
 
 void LoginController::inicializar() {
-
+	LOG_FUNC_ENTRY();
     if (m_model->getMedicos().isEmpty() && m_model->getRecepcionistas().isEmpty()) {
         LOG_WARN("LoginController: Falha ao carregar perfis - Listas vazias.");
         m_view->exibirMensagemErro("ERRO: Falha ao carregar banco de perfis.");
@@ -33,9 +35,11 @@ void LoginController::inicializar() {
 
     LOG_INFO("LoginController: Inicializando View com perfil Medico.");
     aoMudarPerfil(true); 
+	LOG_FUNC_EXIT();
 }
 
 void LoginController::aoTentarLogin(const QString& usuario, const QString& token) {
+	LOG_FUNC_ENTRY();
     bool autorizado = AuthManager::validateToken(token);
 
     if (autorizado) {
@@ -46,9 +50,12 @@ void LoginController::aoTentarLogin(const QString& usuario, const QString& token
         LOG_WARN("AuthManager: Falha na tentativa de login - Token incorreto.");
         m_view->exibirMensagemErro("TOKEN INVÁLIDO OU PERFIL INCORRETO");
     }
+	LOG_FUNC_EXIT();
 }
 
 void LoginController::aoMudarPerfil(bool isDoctor) {
+	LOG_FUNC_ENTRY();
     QStringList lista = isDoctor ? m_model->getMedicos() : m_model->getRecepcionistas();
     m_view->atualizarListaUsuarios(lista, isDoctor);
+	LOG_FUNC_EXIT();
 }

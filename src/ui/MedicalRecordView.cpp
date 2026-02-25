@@ -41,6 +41,7 @@ MedicalRecordView::~MedicalRecordView() {
  * - Frame C: Lista de exames (QListWidget) e botões de ação com cores semânticas.
  */
 void MedicalRecordView::setupUI() {
+	LOG_FUNC_ENTRY();
     auto* mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
@@ -145,6 +146,7 @@ void MedicalRecordView::setupUI() {
 
     connect(m_folderWatcher, &QFileSystemWatcher::directoryChanged, 
             this, &MedicalRecordView::atualizarListaArquivos);
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -154,6 +156,7 @@ void MedicalRecordView::setupUI() {
  * a pasta específica do paciente (Requisito de Portabilidade de Caminhos).
  */
 void MedicalRecordView::carregarDados(const QJsonObject& dados) {
+	LOG_FUNC_ENTRY();
     m_dadosPaciente = dados;
     QString id = dados["id"].toString();
     
@@ -178,6 +181,7 @@ void MedicalRecordView::carregarDados(const QJsonObject& dados) {
     m_folderWatcher->addPath(pathPasta);
     
     atualizarListaArquivos();
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -187,6 +191,7 @@ void MedicalRecordView::carregarDados(const QJsonObject& dados) {
  * (Qt::UserRole) para permitir a abertura precisa na DoctorView.
  */
 void MedicalRecordView::atualizarListaArquivos() {
+	LOG_FUNC_ENTRY();
     m_listaExamesWidget->clear();
     m_btnVisualizar->setEnabled(false); 
 
@@ -203,6 +208,7 @@ void MedicalRecordView::atualizarListaArquivos() {
         QListWidgetItem* item = new QListWidgetItem(info.fileName(), m_listaExamesWidget);
         item->setData(Qt::UserRole, info.absoluteFilePath()); 
     }
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -212,6 +218,7 @@ void MedicalRecordView::atualizarListaArquivos() {
  * O botão de visualização é habilitado/desabilitado via sinais de seleção da lista.
  */
 void MedicalRecordView::onVerExameClicked() {
+	LOG_FUNC_ENTRY();
     QListWidgetItem* item = m_listaExamesWidget->currentItem();
     if (!item) return;
 
@@ -221,6 +228,7 @@ void MedicalRecordView::onVerExameClicked() {
     } else {
         atualizarListaArquivos(); 
     }
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -228,6 +236,8 @@ void MedicalRecordView::onVerExameClicked() {
  * Notifica o sistema para que o status do paciente seja atualizado para 'FINALIZADO'.
  */
 void MedicalRecordView::onFinalizarClicked() {
+	LOG_FUNC_ENTRY();
     LOG_INFO("Atendimento concluído.");
     emit atendimentoFinalizado();
+	LOG_FUNC_EXIT();
 }

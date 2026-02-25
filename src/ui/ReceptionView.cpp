@@ -30,6 +30,7 @@ ReceptionView::ReceptionView(QWidget *parent) : QWidget(parent) {
  * - Frame C (Rodapé): Botão de Agendamento (Verde) e Logout (Vermelho) à direita.
  */
 void ReceptionView::setupUI() {
+	LOG_FUNC_ENTRY();
     auto* mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
@@ -96,6 +97,7 @@ void ReceptionView::setupUI() {
 
     connect(m_btnNovoPaciente, &QPushButton::clicked, this, &ReceptionView::onAddPatient);
     connect(m_btnLogout, &QPushButton::clicked, this, &ReceptionView::logoutRequested);
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -106,6 +108,7 @@ void ReceptionView::setupUI() {
  * Garante que a UI não bloqueie durante a persistência em disco (Eficiência).
  */
 void ReceptionView::onAddPatient() {
+	LOG_FUNC_ENTRY();
     if (m_nameField->text().isEmpty()) return;
 
     LOG_INFO("Recepcionista: Gerando request para " + m_nameField->text().toStdString());
@@ -124,4 +127,5 @@ void ReceptionView::onAddPatient() {
     m_listaRecepcao->insertItem(0, "Aguardando: " + m_nameField->text());
     
     m_nameField->clear();
+	LOG_FUNC_EXIT();
 }

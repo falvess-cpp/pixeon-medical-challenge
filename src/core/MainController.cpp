@@ -92,9 +92,11 @@ void MainController::handleImportarExame(const QString& patientId) {
 
 
 void MainController::carregarListaPacientes() {
+	LOG_FUNC_ENTRY();
     QJsonObject data = GlobalState::instance().getData();
     QJsonArray pacientes = data["pacientes"].toArray();
     m_window->getPatientSelectionView()->atualizarLista(pacientes);
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -102,6 +104,7 @@ void MainController::carregarListaPacientes() {
  * Injeta os dados iniciais na MedicalRecordView e atualiza o status para "Em Atendimento".
  */
 void MainController::iniciarAtendimento(const QJsonObject& paciente) {
+	LOG_FUNC_ENTRY();
     QString id = paciente["id"].toString();
     LOG_INFO("Controller: Iniciando atendimento para " + id.toStdString());
 
@@ -111,6 +114,7 @@ void MainController::iniciarAtendimento(const QJsonObject& paciente) {
 
     GlobalState::instance().pushRequest({WorkerRequest::UPDATE_STATUS, payload});
     m_window->getMedicalRecordView()->carregarDados(paciente);
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -118,6 +122,7 @@ void MainController::iniciarAtendimento(const QJsonObject& paciente) {
  * Notifica o GlobalState para persistência em disco e retorna à fila de espera.
  */
 void MainController::finalizarAtendimento() {
+	LOG_FUNC_ENTRY();
     QString id = m_window->getMedicalRecordView()->getAtendimentoAtualId(); 
     QJsonObject payload;
     payload["id"] = id;
@@ -125,9 +130,11 @@ void MainController::finalizarAtendimento() {
 
     GlobalState::instance().pushRequest({WorkerRequest::UPDATE_STATUS, payload});
     this->carregarListaPacientes();
+	LOG_FUNC_EXIT();
 }
 
 void MainController::initializeDatabase() {
+	LOG_FUNC_ENTRY();
 
     QString resPath = ":/resources/pacientes.json"; 
     if (!QFile::exists(resPath)) {
@@ -150,6 +157,7 @@ void MainController::initializeDatabase() {
     } else {
         LOG_ERROR("ERRO CRITICO: Nao encontrou pacientes.json em :/resources ou :/");
     }
+	LOG_FUNC_EXIT();
 }
 
 

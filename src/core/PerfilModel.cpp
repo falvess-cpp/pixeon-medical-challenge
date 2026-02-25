@@ -18,7 +18,9 @@
  * @brief Construtor: Inicializa o modelo carregando os dados do estado global.
  */
 PerfilModel::PerfilModel() {
+	LOG_FUNC_ENTRY();
     carregarDados();
+	LOG_FUNC_EXIT();
 }
 
 /**
@@ -26,6 +28,7 @@ PerfilModel::PerfilModel() {
  * Utiliza o mecanismo de leitura segura (shared_lock) do GlobalState.
  */
 bool PerfilModel::carregarDados() {
+	LOG_FUNC_ENTRY();
     QFile file(":/perfis.json"); 
     
     if (!file.open(QIODevice::ReadOnly)) {
@@ -58,6 +61,7 @@ bool PerfilModel::carregarDados() {
     file.close();
     LOG_INFO("PerfilModel: Dados carregados com sucesso.");
     return true;
+	LOG_FUNC_EXIT();
 }
 
 QStringList PerfilModel::getMedicos() const { return m_medicos; }
